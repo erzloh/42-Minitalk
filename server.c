@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:13:11 by eric              #+#    #+#             */
-/*   Updated: 2022/12/08 17:26:54 by eholzer          ###   ########.fr       */
+/*   Updated: 2022/12/12 21:23:43 by eric             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,25 @@ void	handle_sigusr2(int sig)
 	} */
 }
 
+void	sig_handler(int signum)
+{
+	static int	bit;
+	static char	bin[8];
+	char		c;
+
+	if (signum == SIGUSR1)
+		bin[bit] = '0';
+	else if (signum == SIGUSR2)
+		bin[bit] = '1';
+	bit++;
+	if (bit == 8)
+	{
+		c = bin_to_char(bin);
+		bit = 0;
+		ft_printf("%c", c);
+	}
+}
+
 int	main(void)
 {
 	int					pid;
@@ -110,11 +129,12 @@ int	main(void)
 	/* sa.sa_handler = &handle_sigusr1;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR1, &sa, NULL); */
-	signal(SIGUSR1, handle_sigusr1);
-	signal(SIGUSR2, handle_sigusr2);
+	signal(SIGUSR1, sig_handler);
+	signal(SIGUSR2, sig_handler);
 
 	//ft_printf("%d", bin_to_char(bin));
 
-	while (1);
+	while (1)
+		pause();
 	return (0);
 }

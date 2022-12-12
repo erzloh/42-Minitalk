@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:55:25 by eric              #+#    #+#             */
-/*   Updated: 2022/12/08 17:17:11 by eholzer          ###   ########.fr       */
+/*   Updated: 2022/12/12 21:02:44 by eric             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int ac, char **av)
 	char	*bin;
 	int 	i;
 	
-	bin = char_to_bin(42);
+	bin = char_to_bin('a');
 	i = 0;
 	while (i < 8)
 	{
@@ -70,11 +70,13 @@ int	main(int ac, char **av)
 		{
 			kill(ft_atoi(av[1]), SIGUSR1);
 			ft_printf("0");
+			usleep(100);
 		}
 		else
 		{
 			kill(ft_atoi(av[1]), SIGUSR2);
 			ft_printf("1");
+			usleep(100);
 		}
 		i++;
 	}
