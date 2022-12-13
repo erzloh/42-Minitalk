@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 16:13:11 by eric              #+#    #+#             */
-/*   Updated: 2022/12/12 21:23:43 by eric             ###   ########.fr       */
+/*   Updated: 2022/12/13 09:56:10 by eholzer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,20 +120,16 @@ void	sig_handler(int signum)
 
 int	main(void)
 {
-	int					pid;
+	int	pid;
 	// struct sigaction	sa;
-	//char	*bin = "00101010";
 
 	pid = getpid();
-	ft_printf("%d\n", pid);
-	/* sa.sa_handler = &handle_sigusr1;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR1, &sa, NULL); */
+	ft_printf("Server's Process ID (PID): %d\n", pid);
 	signal(SIGUSR1, sig_handler);
 	signal(SIGUSR2, sig_handler);
-
-	//ft_printf("%d", bin_to_char(bin));
-
+	/* sa.sa_handler = &sig_handler;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL); */
 	while (1)
 		pause();
 	return (0);

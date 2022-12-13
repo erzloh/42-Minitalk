@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eric <eric@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:55:25 by eric              #+#    #+#             */
-/*   Updated: 2022/12/12 21:02:44 by eric             ###   ########.fr       */
+/*   Updated: 2022/12/13 09:40:59 by eholzer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,48 @@ char	*char_to_bin(char c)
 	return (bin);
 }
 
-int	main(int ac, char **av)
+void	send_char(int pid, char c)
 {
-	(void) ac;
-	(void) av;
+	int		i;
 	char	*bin;
-	int 	i;
-	
-	bin = char_to_bin('a');
+
 	i = 0;
+	bin = char_to_bin(c);
 	while (i < 8)
 	{
 		if (bin[i] == '0')
 		{
-			kill(ft_atoi(av[1]), SIGUSR1);
-			ft_printf("0");
+			kill(pid, SIGUSR1);
 			usleep(100);
 		}
 		else
 		{
-			kill(ft_atoi(av[1]), SIGUSR2);
-			ft_printf("1");
+			kill(pid, SIGUSR2);
 			usleep(100);
 		}
 		i++;
 	}
+	free(bin);
+}
+
+void	send_str(int pid, char *str)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(str);
+	while (i < len)
+	{
+		send_char(pid, str[i]);
+		i++;
+	}
+}
+
+int	main(int ac, char **av)
+{
+	(void) ac;
+	(void) av;
+
+	send_str(ft_atoi(av[1]), av[2]);
 }
