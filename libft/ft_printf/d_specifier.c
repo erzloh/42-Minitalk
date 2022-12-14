@@ -1,18 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   d_specifier.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/03 16:19:26 by eric              #+#    #+#             */
-/*   Updated: 2022/12/14 10:23:27 by eholzer          ###   ########.fr       */
+/*   Created: 2022/11/16 13:40:58 by eholzer           #+#    #+#             */
+/*   Updated: 2022/11/16 15:33:42 by eholzer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
-# include <unistd.h>
-# include <signal.h>
-# include "libft/libft.h"
-#endif
+// Here are functions related to the %d specifier 
+
+#include "ft_printf.h"
+
+int	n_len(int n)
+{
+	int	len;
+
+	len = 0;
+	if (n <= 0)
+		len++;
+	while (n != 0)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+void	print_d(va_list args, int *len, int *i)
+{
+	int	d;
+
+	d = va_arg(args, int);
+	ft_putnbr_fd(d, 1);
+	*len += n_len(d);
+	(*i)++;
+}

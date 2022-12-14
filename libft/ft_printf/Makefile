@@ -5,43 +5,45 @@
 #                                                     +:+ +:+         +:+      #
 #    By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/08 08:39:00 by eholzer           #+#    #+#              #
-#    Updated: 2022/12/14 10:15:15 by eholzer          ###   ########.fr        #
+#    Created: 2022/11/03 17:17:57 by eholzer           #+#    #+#              #
+#    Updated: 2022/12/14 10:10:05 by eholzer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SERVER		=	server
-CLIENT		=	client
+NAME	=	libftprintf.a
 
-SRCS_S		=	server.c
-SRCS_C		=	client.c
+SRCS	=	ft_printf.c \
+			d_specifier.c \
+			u_specifier.c \
+			p_specifier.c \
+			x_specifier.c \
+			other_specifiers.c
 
-OBJS_S		=	${SRCS_S:.c=.o}
-OBJS_C		=	${SRCS_C:.c=.o}
+OBJS	=	${SRCS:.c=.o}
 
-CFLAGS		=	-Wall -Werror -Wextra
-CC			=	gcc
+CC		=	gcc
 
-LIBFT_DIR	=	libft
-LIBFT		=	libft.a
+CFLAGS	=	-Wall -Werror -Wextra
 
-all:		${LIBFT} ${SERVER} ${CLIENT}
+all:		${NAME}
 
-${LIBFT}:
-			make -C ${LIBFT_DIR}
+${NAME}:	${OBJS}
+			make -C libft
+			cp libft/libft.a .
+			mv libft.a ${NAME}
+			ar rc ${NAME} ${OBJS}
+			ranlib ${NAME}
 
-${SERVER}:	${OBJS_S}
-			${CC} ${CFLAGS} -o ${SERVER} ${OBJS_S} ${LIBFT_DIR}/${LIBFT}
-
-${CLIENT}:	${OBJS_C}
-			${CC} ${CFLAGS} -o ${CLIENT} ${OBJS_C} ${LIBFT_DIR}/${LIBFT}
+${NAME}:	${OBJS}
+			ar rc ${NAME} ${OBJS}
+			ranlib ${NAME}
 
 clean:
-			rm -f ${OBJS_S}
-			rm -f ${OBJS_C}
-			make -C ${LIBFT_DIR} clean
+			rm -f ${OBJS}
 
 fclean:		clean
-			rm -f ${SERVER}
-			rm -f ${CLIENT}
-			rm -f ${LIBFT_DIR}/${LIBFT}
+			rm -f ${NAME}
+
+re:			fclean all
+
+.PHONY:		all clean fclean re

@@ -1,18 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/03 16:19:26 by eric              #+#    #+#             */
-/*   Updated: 2022/12/14 10:23:27 by eholzer          ###   ########.fr       */
+/*   Created: 2022/11/04 15:04:28 by eholzer           #+#    #+#             */
+/*   Updated: 2022/11/16 15:02:52 by eholzer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
-# include <unistd.h>
-# include <signal.h>
-# include "libft/libft.h"
-#endif
+#include "ft_printf.h"
+
+int	ft_printf(const char *format, ...)
+{
+	va_list	args;
+	int		len;
+	int		i;
+
+	len = 0;
+	va_start(args, format);
+	i = 0;
+	while (format[i])
+	{
+		if (format[i] == '%')
+			check_specifiers(format, args, &len, &i);
+		else
+		{
+			ft_putchar_fd(format[i], 1);
+			len++;
+		}
+		i++;
+	}
+	va_end(args);
+	return (len);
+}
