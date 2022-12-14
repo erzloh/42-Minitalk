@@ -6,7 +6,7 @@
 /*   By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:55:25 by eric              #+#    #+#             */
-/*   Updated: 2022/12/13 09:40:59 by eholzer          ###   ########.fr       */
+/*   Updated: 2022/12/14 09:36:45 by eholzer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,22 @@ void	send_char(int pid, char c)
 {
 	int		i;
 	char	*bin;
+	int		delay;
 
 	i = 0;
 	bin = char_to_bin(c);
+	delay = 100;
 	while (i < 8)
 	{
 		if (bin[i] == '0')
 		{
 			kill(pid, SIGUSR1);
-			usleep(100);
+			usleep(delay);
 		}
 		else
 		{
 			kill(pid, SIGUSR2);
-			usleep(100);
+			usleep(delay);
 		}
 		i++;
 	}
@@ -96,7 +98,5 @@ void	send_str(int pid, char *str)
 int	main(int ac, char **av)
 {
 	(void) ac;
-	(void) av;
-
 	send_str(ft_atoi(av[1]), av[2]);
 }
