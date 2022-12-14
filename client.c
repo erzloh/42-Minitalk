@@ -6,7 +6,7 @@
 /*   By: eholzer <eholzer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 17:55:25 by eric              #+#    #+#             */
-/*   Updated: 2022/12/14 09:36:45 by eholzer          ###   ########.fr       */
+/*   Updated: 2022/12/14 12:51:32 by eholzer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,15 @@ void	send_str(int pid, char *str)
 
 int	main(int ac, char **av)
 {
-	(void) ac;
-	send_str(ft_atoi(av[1]), av[2]);
+	int	pid;
+
+	pid = ft_atoi(av[1]);
+	if (ac < 3 || ac > 3)
+	{
+		ft_printf("Error: make sure you enter your arguments as follow: ");
+		ft_printf("<PID> <message>");
+		return (1);
+	}
+	send_str(pid, av[2]);
+	send_char(pid, '\n');
 }
