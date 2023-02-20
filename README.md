@@ -5,7 +5,7 @@ To use Minitalk, follow these steps:
 
 1. Clone the repository to your local machine:
 ``` bash
-git clone https://github.com/your-username/minitalk.git
+git clone https://github.com/erzloh/42-Minitalk.git
 ```
 2. Compile the server and client programs separately:
 ``` bash
